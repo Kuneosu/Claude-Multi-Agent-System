@@ -1,0 +1,15 @@
+{
+  "task_id": "documentation-001",
+  "command": "create_documentation",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "artifacts": {
+    "requirements": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/requirements.md",
+    "tech_spec": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/tech-spec.md",
+    "ux_design": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/ux-design.md"
+  },
+  "outputs": [
+    "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller/README.md",
+    "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller/docs/"
+  ],
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/doc-done"
+}

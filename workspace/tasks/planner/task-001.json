@@ -1,0 +1,9 @@
+{
+  "task_id": "plan-001",
+  "command": "create_implementation_plan",
+  "input_requirements": "/workspace/artifacts/requirements.md",
+  "input_ux": "/workspace/artifacts/ux-design.md",
+  "input_tech": "/workspace/artifacts/tech-spec.md",
+  "output": "/workspace/artifacts/implementation-plan.md",
+  "callback": "/workspace/signals/plan-done"
+}

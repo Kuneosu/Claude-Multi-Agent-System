@@ -1,0 +1,16 @@
+{
+  "task_id": "code-review-002",
+  "command": "review_code",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "context": "물리 엔진, UI/UX 개선, 눈금 수정 등 다수의 기능 추가 후 전체 코드 리뷰",
+  "review_criteria": [
+    "코드 품질 및 가독성",
+    "React/Three.js 모범 사례",
+    "물리 엔진 구현 적절성",
+    "성능 최적화",
+    "버그 및 잠재적 이슈",
+    "접근성"
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/code-review-v2.md",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/review-v2-done"
+}

@@ -1,0 +1,14 @@
+{
+  "task_id": "documentation-002",
+  "command": "update_documentation",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "context": "v3.0 최종 릴리스 - 물리 엔진, 테스트 추가, 코드 정리 완료",
+  "updates_required": [
+    "README.md 업데이트 - 물리 엔진, 키보드 조작, 테스트 정보 추가",
+    "docs/ARCHITECTURE.md 업데이트 - 물리 엔진 아키텍처 반영",
+    "docs/API.md 업데이트 - 새 상수(PHYSICS, SETTLE_DETECTION, THROW_CONFIG) 문서화",
+    "docs/CHANGELOG.md 업데이트 - v2.0, v3.0 변경사항 추가"
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/doc-update-done"
+}

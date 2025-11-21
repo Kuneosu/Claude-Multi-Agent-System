@@ -1,0 +1,7 @@
+{
+  "task_id": "ux-design-001",
+  "command": "design_ux",
+  "input": "/workspace/artifacts/requirements.md",
+  "output": "/workspace/artifacts/ux-design.md",
+  "callback": "/workspace/signals/ux-design-done"
+}

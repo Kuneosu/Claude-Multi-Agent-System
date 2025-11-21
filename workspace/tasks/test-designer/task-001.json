@@ -1,0 +1,10 @@
+{
+  "task_id": "test-design-001",
+  "command": "design_tests",
+  "input_requirements": "/workspace/artifacts/requirements.md",
+  "input_ux": "/workspace/artifacts/ux-design.md",
+  "input_tech": "/workspace/artifacts/tech-spec.md",
+  "input_plan": "/workspace/artifacts/implementation-plan.md",
+  "output": "/workspace/artifacts/test-plan.md",
+  "callback": "/workspace/signals/test-design-done"
+}

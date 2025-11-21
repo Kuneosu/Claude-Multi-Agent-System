@@ -1,0 +1,27 @@
+{
+  "task_id": "dice-dot-fix-006",
+  "command": "fix_dice_dots",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "requirements": [
+    {
+      "priority": "critical",
+      "feature": "주사위 눈금 색상 진하게",
+      "details": [
+        "눈금 색상을 더 진한 색으로 변경",
+        "현재: 연한 색 → 변경: 진한 검정색 (#1a1a1a 또는 #000000)",
+        "대비가 확실하게 보이도록"
+      ]
+    },
+    {
+      "priority": "critical",
+      "feature": "주사위 눈금 크기 재조정",
+      "details": [
+        "주사위 크기(DICE_SIZE=1)에 맞게 눈금 비율 조정",
+        "실제 주사위처럼 눈금이 면의 적절한 비율을 차지하도록",
+        "눈금 간격도 조정"
+      ]
+    }
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/dot-fix-done"
+}

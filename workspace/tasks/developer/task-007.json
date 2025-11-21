@@ -1,0 +1,18 @@
+{
+  "task_id": "dot-center-fix-007",
+  "command": "center_dice_dots",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "requirements": [
+    {
+      "priority": "critical",
+      "feature": "주사위 눈금 중앙 정렬",
+      "details": [
+        "각 면의 눈금 패턴이 면 중앙에 위치하도록 수정",
+        "텍스처 UV 매핑 확인 및 수정",
+        "getDotPositions 함수의 좌표 계산 검토"
+      ]
+    }
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/center-fix-done"
+}

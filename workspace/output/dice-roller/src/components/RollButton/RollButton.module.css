@@ -1,0 +1,65 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  background-color: #4A90E2;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, opacity 0.2s ease;
+  min-width: 280px;
+  width: 80vw;
+  max-width: 320px;
+  height: 52px;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #357ABD;
+  transform: scale(1.02);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.button:focus {
+  outline: 3px solid #4A90E2;
+  outline-offset: 2px;
+}
+
+.button:disabled,
+.button.disabled {
+  background-color: #CCCCCC;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .button {
+    width: 220px;
+    height: 56px;
+    font-size: 1.25rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .button {
+    width: 240px;
+    height: 60px;
+    font-size: 1.375rem;
+  }
+}
+
+/* 모션 감소 모드 */
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

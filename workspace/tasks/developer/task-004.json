@@ -1,0 +1,53 @@
+{
+  "task_id": "ui-enhancement-004",
+  "command": "enhance_ui_ux",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "requirements": [
+    {
+      "priority": "high",
+      "feature": "전체화면 레이아웃",
+      "details": [
+        "헤더 제거",
+        "주사위 씬이 화면 전체를 차지",
+        "푸터 제거 또는 최소화"
+      ]
+    },
+    {
+      "priority": "high",
+      "feature": "키보드 컨트롤",
+      "details": [
+        "SPACE 바로 주사위 굴리기",
+        "전역 키보드 이벤트 리스너 추가"
+      ]
+    },
+    {
+      "priority": "high",
+      "feature": "결과 표시 위치 변경",
+      "details": [
+        "화면 중앙 상단에 결과 표시",
+        "오버레이 스타일로 3D 씬 위에 표시",
+        "깔끔한 타이포그래피"
+      ]
+    },
+    {
+      "priority": "high",
+      "feature": "주사위 현실감 향상",
+      "details": [
+        "모서리 둥글게 깎기 (RoundedBoxGeometry 또는 bevel)",
+        "명암/그림자 개선",
+        "재질감 향상 (metalness, roughness 조정)"
+      ]
+    },
+    {
+      "priority": "high",
+      "feature": "바닥 현실감 향상",
+      "details": [
+        "나무 마룻바닥 텍스처 개선",
+        "그림자 효과 강화",
+        "반사/광택 효과"
+      ]
+    }
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/ui-done"
+}

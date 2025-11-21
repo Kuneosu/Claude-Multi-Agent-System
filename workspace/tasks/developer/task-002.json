@@ -1,0 +1,31 @@
+{
+  "task_id": "bugfix-enhancement-002",
+  "command": "fix_and_enhance",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "issues": [
+    {
+      "type": "bug",
+      "priority": "critical",
+      "description": "주사위 눈금과 결과 숫자 불일치 - 화면에 보이는 주사위 윗면과 결과 숫자가 다름",
+      "fix": "주사위가 멈췄을 때 실제로 위를 향하는 면의 숫자가 결과가 되도록 수정"
+    },
+    {
+      "type": "enhancement",
+      "priority": "high",
+      "description": "바닥 추가 및 물리 기반 애니메이션",
+      "requirements": [
+        "바닥 평면 추가 (나무 재질 마룻바닥 텍스처)",
+        "주사위가 바닥 위에서 굴러가는 듯한 애니메이션",
+        "배경색을 검정색으로 변경"
+      ]
+    },
+    {
+      "type": "bugfix",
+      "priority": "medium", 
+      "description": "ESLint 에러 5개 수정",
+      "files": ["Dice3D.jsx", "ErrorBoundary.jsx", "useWebGLSupport.js"]
+    }
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/dev-fix-done"
+}

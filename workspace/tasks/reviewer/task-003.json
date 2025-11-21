@@ -1,0 +1,9 @@
+{
+  "task_id": "code-review-003",
+  "command": "review_code",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "context": "개선 작업 완료 후 최종 코드 리뷰 (테스트 추가, 미사용 파일 정리, 상수화)",
+  "previous_review": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/code-review-v2.md",
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/code-review-v3.md",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/review-v3-done"
+}

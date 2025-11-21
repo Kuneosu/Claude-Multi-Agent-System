@@ -1,0 +1,11 @@
+{
+  "task_id": "dev-impl-001",
+  "command": "implement_project",
+  "input_requirements": "/workspace/artifacts/requirements.md",
+  "input_ux": "/workspace/artifacts/ux-design.md",
+  "input_tech": "/workspace/artifacts/tech-spec.md",
+  "input_plan": "/workspace/artifacts/implementation-plan.md",
+  "input_tests": "/workspace/artifacts/test-plan.md",
+  "output_dir": "/workspace/output/dice-roller",
+  "callback": "/workspace/signals/dev-done"
+}

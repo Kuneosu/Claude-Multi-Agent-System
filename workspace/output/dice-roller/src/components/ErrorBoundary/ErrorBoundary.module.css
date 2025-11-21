@@ -1,0 +1,45 @@
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.errorIcon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.errorTitle {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.errorMessage {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.errorHint {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.browserList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.browserList li {
+  padding: 0.5rem 0;
+  font-size: 1rem;
+}

@@ -1,0 +1,37 @@
+{
+  "task_id": "improvements-008",
+  "command": "implement_improvements",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "requirements": [
+    {
+      "priority": "medium",
+      "feature": "테스트 코드 추가",
+      "details": [
+        "Vitest 설정 추가",
+        "utils 함수 단위 테스트 작성",
+        "package.json에 test 스크립트 추가"
+      ]
+    },
+    {
+      "priority": "low",
+      "feature": "미사용 파일 정리",
+      "details": [
+        "src/components/Dice3D/Dice3D.jsx 삭제 또는 정리",
+        "src/hooks/useDiceRoll.js 삭제 또는 정리",
+        "관련 index.js 파일 정리"
+      ]
+    },
+    {
+      "priority": "low",
+      "feature": "하드코딩 값 상수화",
+      "details": [
+        "물리 파라미터 상수화 (restitution, friction, damping)",
+        "정지 감지 임계값 상수화 (speed threshold, angSpeed threshold)",
+        "정지 확인 시간 상수화 (settleTime)",
+        "constants.js에 추가"
+      ]
+    }
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/improvements-done"
+}

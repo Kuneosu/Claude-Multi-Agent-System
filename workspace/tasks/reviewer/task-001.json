@@ -1,0 +1,21 @@
+{
+  "task_id": "code-review-001",
+  "command": "review_code",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "artifacts": {
+    "requirements": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/requirements.md",
+    "tech_spec": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/tech-spec.md",
+    "test_plan": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/test-plan.md"
+  },
+  "review_criteria": [
+    "코드 품질 및 가독성",
+    "React 모범 사례 준수",
+    "Three.js 성능 최적화",
+    "접근성(WCAG 2.1 AA) 준수",
+    "에러 처리 및 예외 상황",
+    "반응형 디자인 구현",
+    "테스트 가능성"
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/artifacts/code-review.md",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/review-done"
+}

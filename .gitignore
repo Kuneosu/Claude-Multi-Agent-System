@@ -1,0 +1,24 @@
+# Compressed files
+*.tar.gz
+*.zip
+
+# OS files
+.DS_Store
+
+# Log files
+workspace/logs/*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Signal files (runtime)
+workspace/signals/*
+
+# Status files (runtime)
+workspace/status/*
+
+# Keep directories
+!workspace/logs/.gitkeep
+!workspace/signals/.gitkeep
+!workspace/status/.gitkeep

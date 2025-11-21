@@ -1,0 +1,8 @@
+{
+  "task_id": "tech-arch-001",
+  "command": "design_architecture",
+  "input_requirements": "/workspace/artifacts/requirements.md",
+  "input_ux": "/workspace/artifacts/ux-design.md",
+  "output": "/workspace/artifacts/tech-spec.md",
+  "callback": "/workspace/signals/tech-arch-done"
+}

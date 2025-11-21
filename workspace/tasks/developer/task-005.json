@@ -1,0 +1,35 @@
+{
+  "task_id": "camera-dice-fix-005",
+  "command": "fix_camera_and_dice",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "requirements": [
+    {
+      "priority": "critical",
+      "feature": "주사위 눈금 크기 수정",
+      "details": [
+        "주사위 크기와 눈금 크기 비율 맞추기",
+        "눈금이 주사위 면에 적절하게 보이도록 조정"
+      ]
+    },
+    {
+      "priority": "high",
+      "feature": "주사위 크기 축소",
+      "details": [
+        "현재보다 작은 크기로 조정",
+        "DICE_SIZE 상수 조정"
+      ]
+    },
+    {
+      "priority": "high",
+      "feature": "카메라 줌 기능",
+      "details": [
+        "스크롤로 줌인/줌아웃",
+        "OrbitControls 사용",
+        "카메라 기본 위치 더 멀리 (줌아웃)",
+        "줌 범위 제한 (minDistance, maxDistance)"
+      ]
+    }
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/camera-fix-done"
+}

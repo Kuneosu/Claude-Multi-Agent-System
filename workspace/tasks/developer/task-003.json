@@ -1,0 +1,37 @@
+{
+  "task_id": "physics-enhancement-003",
+  "command": "implement_physics",
+  "project_path": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "requirements": [
+    {
+      "priority": "critical",
+      "feature": "물리 엔진 적용",
+      "details": [
+        "@react-three/rapier 또는 cannon-es 물리 라이브러리 설치",
+        "중력 적용 - 주사위가 위에서 떨어지는 효과",
+        "바닥과 물리적 충돌 - 주사위가 바닥에 맞춰 평평하게 멈춤",
+        "주사위가 굴러가다가 자연스럽게 멈추는 효과"
+      ]
+    },
+    {
+      "priority": "high",
+      "feature": "카메라 위치 변경",
+      "details": [
+        "쿼터뷰(등각 투영) 시점으로 카메라 이동",
+        "주사위 윗면이 항상 잘 보이는 각도",
+        "예: position=[5, 5, 5] lookAt=[0, 0, 0]"
+      ]
+    },
+    {
+      "priority": "high", 
+      "feature": "던지기 애니메이션",
+      "details": [
+        "주사위를 위에서 던지는 효과",
+        "랜덤한 초기 회전력 적용",
+        "바운스 후 자연스럽게 정지"
+      ]
+    }
+  ],
+  "output": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/output/dice-roller",
+  "callback": "/Users/k/Documents/home/AI_Orchestration/multi-agent-system/workspace/signals/physics-done"
+}

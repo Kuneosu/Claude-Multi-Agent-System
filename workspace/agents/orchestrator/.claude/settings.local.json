@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(workspace/status/requirement-analyst.status)",
+      "Bash(bash:*)",
+      "Bash(workspace/logs/orchestrator.log)",
+      "Bash(workspace/status/ux-designer.status)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
