@@ -18,6 +18,7 @@ DIRS_TO_CLEAN=(
     "src"
     "tests"
     "docs"
+    "project"
 )
 
 # 각 디렉토리 내용 삭제 (디렉토리 자체는 유지)
@@ -46,11 +47,14 @@ if [ -d "$WORKSPACE/status" ]; then
             echo "idle" > "$status_file"
         fi
     done
-    # current_project.id 삭제
+    # 프로젝트 관련 파일 삭제
     rm -f "$WORKSPACE/status/current_project.id" 2>/dev/null
+    rm -f "$WORKSPACE/status/current_project.name" 2>/dev/null
+    rm -f "$WORKSPACE/status/current_project.path" 2>/dev/null
     echo "  ✓ status/ 초기화됨 (모두 idle)"
 fi
 
 echo ""
 echo "✅ Workspace 초기화 완료"
-echo "   유지됨: agents/, output/"
+echo "   유지됨: agents/, output/ (완성된 프로젝트 보관)"
+echo "   초기화됨: artifacts/, input/, signals/, logs/, src/, tests/, docs/, project/, tasks/, status/"

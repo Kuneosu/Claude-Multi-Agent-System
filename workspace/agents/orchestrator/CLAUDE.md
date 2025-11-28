@@ -60,10 +60,8 @@
    # 상태 업데이트
    echo "working" > /workspace/status/requirement-analyst.status
    
-   # tmux로 알림 전송 (메시지와 Enter를 분리하여 전송)
-   tmux send-keys -t requirement-analyst:0 "새로운 작업이 할당되었습니다. /workspace/tasks/requirement-analyst/task-001.json 파일을 확인하세요."
-   sleep 0.2
-   tmux send-keys -t requirement-analyst:0 C-m
+   # tmux로 알림 전송
+   tmux send-keys -t requirement-analyst:0 "새로운 작업이 할당되었습니다. /workspace/tasks/requirement-analyst/task-001.json 파일을 확인하세요." C-m
    ```
 
 3. **에이전트 응답 대기**

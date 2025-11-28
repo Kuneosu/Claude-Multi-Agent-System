@@ -127,16 +127,21 @@ multi-agent-system/
     │   ├── requirement-analyst/
     │   ├── ux-designer/
     │   └── ...
-    ├── artifacts/              # 생성된 산출물
+    ├── agents/                 # 각 에이전트 작업 디렉토리
+    ├── artifacts/              # 생성된 산출물 (중간 문서)
     ├── tasks/                 # 에이전트별 작업 큐
     ├── signals/               # 통신용 시그널
     ├── status/                # 에이전트 상태
     ├── logs/                  # 실행 로그
     ├── input/                 # 사용자 입력
-    ├── output/                # 최종 결과물
-    ├── tests/                 # 테스트 파일
-    ├── docs/                  # 문서
-    └── src/                   # 소스 코드
+    ├── output/                # 최종 결과물 (프로젝트별 폴더)
+    │   ├── 20241127_153000_todo-app/
+    │   ├── 20241127_160000_dice-game/
+    │   └── ...
+    ├── tests/                 # 임시 테스트 파일
+    ├── docs/                  # 임시 문서
+    ├── src/                   # 임시 소스 코드
+    └── project/               # 임시 작업 공간 (매 실행시 초기화)
 ```
 
 ## 개발 워크플로우
@@ -278,7 +283,7 @@ ls workspace/signals/
 → developer: 구현 (각 iteration마다 reviewer 검토)
 → documenter: 문서화
 
-결과: workspace/output/ 에 완성된 프로젝트
+결과: workspace/output/20241127_153000_todo/ 에 완성된 프로젝트
 ```
 
 ### 예시 2: 복잡한 3D 앱
@@ -295,7 +300,41 @@ ls workspace/signals/
 → reviewer: 성능 검증
 → documenter: 기술 문서
 
-결과: 완전히 작동하는 3D 주사위 웹 앱
+결과: workspace/output/20241127_160000_3d-/ 에 완전히 작동하는 3D 주사위 웹 앱
+```
+
+## 프로젝트 결과물 관리
+
+### output 폴더 구조
+
+각 프로젝트는 별도 폴더에 저장됩니다:
+
+```
+workspace/output/
+├── 20241127_153000_todo-app/       # 첫 번째 프로젝트
+│   ├── package.json
+│   ├── src/
+│   ├── public/
+│   └── README.md
+├── 20241127_160000_dice-game/      # 두 번째 프로젝트
+│   ├── package.json
+│   ├── src/
+│   └── ...
+└── 20241128_100000_dashboard/      # 세 번째 프로젝트
+    └── ...
+```
+
+### 프로젝트 실행
+
+```bash
+# 완성된 프로젝트로 이동
+cd workspace/output/20241127_153000_todo-app/
+
+# 의존성 설치 (이미 되어 있을 수 있음)
+npm install
+
+# 개발 서버 실행
+npm run dev
 ```
 
 ## 주요 기능
