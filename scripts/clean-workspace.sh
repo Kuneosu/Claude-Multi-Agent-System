@@ -9,7 +9,7 @@ WORKSPACE="$ROOT_DIR/workspace"
 
 echo "🧹 Workspace 초기화 중..."
 
-# 초기화할 디렉토리 목록 (output은 제외)
+# 초기화할 디렉토리 목록 (output, project는 제외 - 결과물 보존)
 DIRS_TO_CLEAN=(
     "artifacts"
     "input"
@@ -18,7 +18,7 @@ DIRS_TO_CLEAN=(
     "src"
     "tests"
     "docs"
-    "project"
+    "state"
 )
 
 # 각 디렉토리 내용 삭제 (디렉토리 자체는 유지)
@@ -56,5 +56,5 @@ fi
 
 echo ""
 echo "✅ Workspace 초기화 완료"
-echo "   유지됨: agents/, output/ (완성된 프로젝트 보관)"
-echo "   초기화됨: artifacts/, input/, signals/, logs/, src/, tests/, docs/, project/, tasks/, status/"
+echo "   유지됨: agents/, output/, project/ (프로젝트 결과물 보관)"
+echo "   초기화됨: artifacts/, input/, signals/, logs/, src/, tests/, docs/, state/, tasks/, status/"

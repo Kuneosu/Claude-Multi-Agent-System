@@ -31,7 +31,12 @@ for agent in "${AGENTS[@]}"; do
     # CLAUDE.md 파일을 시스템 프롬프트로 사용하여 claude 실행
     # 파일 내용을 직접 전달하면 길이 제한 문제가 있으므로 --append-system-prompt 사용
     # 메시지와 Enter를 분리하여 전송 (버퍼 문제 방지)
-    tmux send-keys -t "$agent:0" "claude --append-system-prompt \"\$(cat CLAUDE.md)\""
+    # orchestrator만 Haiku, 나머지는 Opus 모델 사용
+    if [[ "$agent" == "orchestrator" ]]; then
+        tmux send-keys -t "$agent:0" "claude --model haiku --append-system-prompt \"\$(cat CLAUDE.md)\""
+    else
+        tmux send-keys -t "$agent:0" "claude --model opus --append-system-prompt \"\$(cat CLAUDE.md)\""
+    fi
     sleep 0.2
     tmux send-keys -t "$agent:0" C-m
 
