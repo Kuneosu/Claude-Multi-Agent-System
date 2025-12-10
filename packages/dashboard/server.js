@@ -248,42 +248,95 @@ const server = http.createServer((req, res) => {
 
                 // All agents stopped, start restart process
                 if (agentsStopped === totalAgents) {
-                    console.log('[Restart] All sessions killed. Waiting 1 second before restart...');
+                    console.log('[Restart] All sessions killed. Waiting 2 seconds before restart...');
 
                     setTimeout(() => {
-                        console.log('[Restart] Starting all agents...');
-                        let agentsStarted = 0;
+                        console.log('[Restart] Creating all agent sessions...');
+                        let sessionsCreated = 0;
 
+                        // Step 1: Create all tmux sessions with proper status bar
                         AGENTS.forEach(agentId => {
                             const agentDir = path.join(AGENTS_DIR, agentId);
-                            const claudeCmd = `claude --dangerously-skip-permissions --model opus --append-system-prompt "\\$(cat CLAUDE.md)"`;
-                            const cmd = `tmux new-session -d -s ${agentId} -c "${agentDir}" && tmux set-option -t ${agentId} mouse off && sleep 0.2 && tmux send-keys -t ${agentId}:0 '${claudeCmd}' && sleep 0.2 && tmux send-keys -t ${agentId}:0 C-m`;
+                            const sessionCmd = `tmux new-session -d -s ${agentId} -c "${agentDir}" && ` +
+                                `tmux set-option -t ${agentId} status on && ` +
+                                `tmux set-option -t ${agentId} status-style "bg=red,fg=white" && ` +
+                                `tmux set-option -t ${agentId} status-left "[${agentId}] (Auto) " && ` +
+                                `tmux set-option -t ${agentId} status-left-length 30 && ` +
+                                `tmux set-option -t ${agentId} status-right " Ctrl+b,d:메뉴로 돌아가기 " && ` +
+                                `tmux set-option -t ${agentId} status-right-length 30`;
 
-                            exec(cmd, (err) => {
-                                agentsStarted++;
+                            exec(sessionCmd, (err) => {
+                                sessionsCreated++;
                                 if (!err) {
-                                    console.log(`[Restart] Started: ${agentId}`);
+                                    console.log(`[Restart] Session created: ${agentId}`);
                                 } else {
-                                    console.error(`[Restart] Failed to start ${agentId}:`, err.message);
+                                    console.error(`[Restart] Failed to create session ${agentId}:`, err.message);
                                 }
 
-                                if (agentsStarted === totalAgents) {
-                                    console.log('[Restart] All agents restarted successfully');
+                                // All sessions created, start claude
+                                if (sessionsCreated === totalAgents) {
+                                    console.log('[Restart] All sessions created. Starting Claude instances...');
 
-                                    // Send initial prompt to orchestrator after short delay
                                     setTimeout(() => {
-                                        const initMessage = "당신은 디스패처(Dispatcher)입니다. 사용자의 프로젝트 요청을 받으면, 절대 직접 코드를 작성하지 말고 반드시 전문 에이전트들(requirement-analyst, ux-designer, tech-architect, planner, test-designer, developer, reviewer, documenter)에게 tmux를 통해 작업을 위임하세요. 각 에이전트에게 작업 지시 시 반드시 status 파일을 working/idle로 업데이트하고, 시그널 대기를 수행하세요.";
-                                        const initCmd = `tmux send-keys -t orchestrator:0 "${initMessage}" && sleep 0.3 && tmux send-keys -t orchestrator:0 C-m`;
-                                        exec(initCmd, (err) => {
-                                            if (!err) {
-                                                console.log('[Restart] Sent initial prompt to orchestrator');
-                                            }
+                                        let claudeStarted = 0;
+
+                                        // Step 2: Start claude in each session
+                                        AGENTS.forEach(agentId => {
+                                            // Note: In production, model should come from config
+                                            // For now using opus as default (matching config.sh defaults)
+                                            const claudeCmd = `claude --dangerously-skip-permissions --model opus --append-system-prompt "\\$(cat CLAUDE.md)"`;
+                                            const startCmd = `tmux send-keys -t ${agentId}:0 '${claudeCmd}' Enter`;
+
+                                            exec(startCmd, (err) => {
+                                                claudeStarted++;
+                                                if (!err) {
+                                                    console.log(`[Restart] Claude started: ${agentId}`);
+                                                }
+
+                                                // All claude instances started, wait and send init messages
+                                                if (claudeStarted === totalAgents) {
+                                                    console.log('[Restart] All Claude instances started. Waiting 8 seconds for initialization...');
+
+                                                    // Step 3: Wait for Claude to fully initialize, then send init messages
+                                                    setTimeout(() => {
+                                                        console.log('[Restart] Sending initialization messages to all agents...');
+
+                                                        // Orchestrator message
+                                                        const orchestratorMsg = '시스템 초기화 완료. 당신은 오케스트레이터입니다. CLAUDE.md에 정의된 역할과 규칙을 반드시 준수하세요. 사용자의 프로젝트 요청을 받으면 절대 직접 코드를 작성하지 말고, 전문 에이전트들에게 tmux를 통해 작업을 위임하세요.';
+                                                        exec(`tmux send-keys -t orchestrator:0 "${orchestratorMsg}" Enter`, (err) => {
+                                                            if (!err) {
+                                                                console.log('[Restart] Sent init message to orchestrator');
+                                                            }
+                                                        });
+
+                                                        // Other agents message
+                                                        const agentMsg = '시스템 초기화 완료. CLAUDE.md에 정의된 역할과 규칙을 반드시 준수하세요. 작업 완료 시 반드시 시그널 파일을 생성하고 상태를 업데이트하세요.';
+                                                        let msgsSent = 0;
+
+                                                        AGENTS.forEach(agentId => {
+                                                            if (agentId !== 'orchestrator') {
+                                                                setTimeout(() => {
+                                                                    exec(`tmux send-keys -t ${agentId}:0 "${agentMsg}" Enter`, (err) => {
+                                                                        msgsSent++;
+                                                                        if (!err) {
+                                                                            console.log(`[Restart] Sent init message to ${agentId}`);
+                                                                        }
+                                                                        if (msgsSent === totalAgents - 1) {
+                                                                            console.log('[Restart] All initialization messages sent successfully');
+                                                                        }
+                                                                    });
+                                                                }, msgsSent * 500); // Stagger messages by 500ms
+                                                            }
+                                                        });
+                                                    }, 8000); // Wait 8 seconds for Claude to initialize
+                                                }
+                                            });
                                         });
-                                    }, 2000);
+                                    }, 500); // Small delay after session creation
                                 }
                             });
                         });
-                    }, 1000);
+                    }, 2000); // Wait 2 seconds after killing sessions
                 }
             });
         });
