@@ -1,0 +1,29 @@
+{
+  "name": "multi-agent-system",
+  "version": "1.0.0",
+  "description": "Multi-Agent System with Claude Code - Orchestrated AI agents for software development",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "setup": "./setup.sh",
+    "start": "./run.sh",
+    "start:auto": "./run-auto.sh",
+    "dashboard": "./dashboard.sh",
+    "stop": "./stop.sh",
+    "postinstall": "cd packages/dashboard && npm install"
+  },
+  "keywords": [
+    "multi-agent",
+    "claude",
+    "ai",
+    "orchestration",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

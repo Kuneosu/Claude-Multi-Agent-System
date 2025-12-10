@@ -1,45 +1,80 @@
+# =============================================================================
+# Multi-Agent System .gitignore
+# =============================================================================
+
 # Compressed files
 *.tar.gz
 *.zip
 
 # OS files
 .DS_Store
+Thumbs.db
 
-# Log files
-workspace/logs/*.log
-
-# Temporary files
+# Editor files
 *.tmp
 *.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-*
 
-# Signal files (runtime)
+# =============================================================================
+# Node.js
+# =============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+
+# =============================================================================
+# Workspace (Runtime files)
+# =============================================================================
+
+# Log files
+workspace/logs/*
+
+# Signal files (IPC)
 workspace/signals/*
 
-# Status files (runtime)
+# Status files
 workspace/status/*
 
-# Artifacts (runtime generated)
+# Artifacts (intermediate outputs)
 workspace/artifacts/*
 
-# User input files (runtime)
+# User input files
 workspace/input/*
 
-# Task files (runtime)
+# Task files
 workspace/tasks/**/*.json
 
-# Output files (runtime generated)
+# Output files (completed projects)
 workspace/output/*
 
-# Project files (user projects)
+# Project files (temporary workspace)
 workspace/project/*
 
-# Review files (runtime)
+# Review files
 workspace/reviews/*
 
-# State files (runtime)
+# State files
 workspace/state/*
 
-# Keep directories
+# Callback files
+workspace/callbacks/*
+
+# =============================================================================
+# Dashboard
+# =============================================================================
+packages/dashboard/.dashboard.pids
+packages/dashboard/node_modules/
+
+# =============================================================================
+# Keep empty directories
+# =============================================================================
 !workspace/logs/.gitkeep
 !workspace/signals/.gitkeep
 !workspace/status/.gitkeep
@@ -48,3 +83,6 @@ workspace/state/*
 !workspace/output/.gitkeep
 !workspace/project/.gitkeep
 !workspace/state/.gitkeep
+!workspace/reviews/.gitkeep
+!workspace/callbacks/.gitkeep
+!workspace/tasks/.gitkeep

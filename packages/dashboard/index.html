@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Multi-Agent Terminal Dashboard - 9개 AI 에이전트를 모니터링하는 웹 대시보드">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Multi-Agent Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Preload critical resources -->
+    <link rel="preload" href="js/app.js" as="script">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen" role="status" aria-label="대시보드 로딩 중">
+        <img src="/assets/loading.gif" alt="Loading" class="loading-gif">
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-left">
+            <span class="header-icon" aria-hidden="true">&#9776;</span>
+            <h1 class="header-title">Multi-Agent Dashboard</h1>
+        </div>
+        <div class="header-right">
+            <button class="view-toggle-button"
+                    id="view-toggle-button"
+                    aria-label="뷰 모드 전환"
+                    title="뷰 모드 전환 (V)">
+                <span class="view-icon tab-view" aria-hidden="true">&#9776;</span>
+                <span class="view-icon split-view hidden" aria-hidden="true">&#8862;</span>
+            </button>
+            <button class="cover-toggle-button active"
+                    id="cover-toggle-button"
+                    aria-label="Status Cover 토글"
+                    title="Status Cover 토글 (C)">
+                <svg class="cover-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </button>
+            <span class="connection-status" id="connection-status" role="status" aria-live="polite">
+                <span class="status-dot connected" aria-hidden="true"></span>
+                <span class="status-text">연결됨</span>
+            </span>
+            <button class="help-button"
+                    id="help-button"
+                    aria-label="도움말 및 단축키"
+                    title="도움말 (?)">?</button>
+            <button class="shutdown-button"
+                    id="shutdown-button"
+                    aria-label="시스템 종료"
+                    title="시스템 종료">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                    <line x1="12" y1="2" x2="12" y2="12"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Tab Container -->
+    <nav class="tab-container" id="tabs" role="tablist" aria-label="에이전트 탭">
+        <button class="tab-button active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="terminal-orchestrator"
+                data-agent-id="orchestrator"
+                data-port="7681"
+                data-tooltip="Orchestrator - 전체 조율 (Ctrl+1)"
+                id="tab-orchestrator"
+                tabindex="0">
+            <span class="tab-name" data-name>ORC</span>
+            <span class="status-indicator idle" data-status aria-label="대기 중"></span>
+        </button>
+        <button class="tab-button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="terminal-requirement-analyst"
+                data-agent-id="requirement-analyst"
+                data-port="7682"
+                data-tooltip="Requirement Analyst - 요구사항 분석 (Ctrl+2)"
+                id="tab-requirement-analyst"
+                tabindex="-1">
+            <span class="tab-name" data-name>REQ</span>
+            <span class="status-indicator idle" data-status aria-label="대기 중"></span>
+        </button>
+        <button class="tab-button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="terminal-ux-designer"
+                data-agent-id="ux-designer"
+                data-port="7683"
+                data-tooltip="UX Designer - UX 설계 (Ctrl+3)"
+                id="tab-ux-designer"
+                tabindex="-1">
+            <span class="tab-name" data-name>UX</span>
+            <span class="status-indicator idle" data-status aria-label="대기 중"></span>
+        </button>
+        <button class="tab-button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="terminal-tech-architect"
+                data-agent-id="tech-architect"
+                data-port="7684"
+                data-tooltip="Tech Architect - 기술 설계 (Ctrl+4)"
+                id="tab-tech-architect"
+                tabindex="-1">
+            <span class="tab-name" data-name>TECH</span>
+            <span class="status-indicator idle" data-status aria-label="대기 중"></span>
+        </button>
+        <button class="tab-button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="terminal-planner"
+                data-agent-id="planner"
+                data-port="7685"
+                data-tooltip="Planner - 작업 계획 (Ctrl+5)"
+                id="tab-planner"
+                tabindex="-1">
+            <span class="tab-name" data-name>PLAN</span>
+            <span class="status-indicator idle" data-status aria-label="대기 중"></span>
+        </button>
+        <button class="tab-button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="terminal-test-designer"
+                data-agent-id="test-designer"
+                data-port="7686"
+                data-tooltip="Test Designer - 테스트 설계 (Ctrl+6)"
+                id="tab-test-designer"
+                tabindex="-1">
+            <span class="tab-name" data-name>TEST</span>
+            <span class="status-indicator idle" data-status aria-label="대기 중"></span>
+        </button>
+        <button class="tab-button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="terminal-developer"
+                data-agent-id="developer"
+                data-port="7687"
+                data-tooltip="Developer - 개발 (Ctrl+7)"
+                id="tab-developer"
+                tabindex="-1">
+            <span class="tab-name" data-name>DEV</span>
+            <span class="status-indicator idle" data-status aria-label="대기 중"></span>
+        </button>
+        <button class="tab-button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="terminal-reviewer"
+                data-agent-id="reviewer"
+                data-port="7688"
+                data-tooltip="Reviewer - 코드 리뷰 (Ctrl+8)"
+                id="tab-reviewer"
+                tabindex="-1">
+            <span class="tab-name" data-name>REV</span>
+            <span class="status-indicator idle" data-status aria-label="대기 중"></span>
+        </button>
+        <button class="tab-button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="terminal-documenter"
+                data-agent-id="documenter"
+                data-port="7689"
+                data-tooltip="Documenter - 문서화 (Ctrl+9)"
+                id="tab-documenter"
+                tabindex="-1">
+            <span class="tab-name" data-name>DOC</span>
+            <span class="status-indicator idle" data-status aria-label="대기 중"></span>
+        </button>
+    </nav>
+
+    <!-- Terminal Container -->
+    <main class="terminal-container" id="terminal-area">
+        <iframe class="terminal-iframe"
+                role="tabpanel"
+                id="terminal-orchestrator"
+                data-port="7681"
+                src="/terminal/7681/"
+                aria-labelledby="tab-orchestrator"
+                title="Orchestrator 터미널"></iframe>
+        <iframe class="terminal-iframe hidden"
+                role="tabpanel"
+                id="terminal-requirement-analyst"
+                data-port="7682"
+                src="/terminal/7682/"
+                aria-labelledby="tab-requirement-analyst"
+                title="Requirement Analyst 터미널"></iframe>
+        <iframe class="terminal-iframe hidden"
+                role="tabpanel"
+                id="terminal-ux-designer"
+                data-port="7683"
+                src="/terminal/7683/"
+                aria-labelledby="tab-ux-designer"
+                title="UX Designer 터미널"></iframe>
+        <iframe class="terminal-iframe hidden"
+                role="tabpanel"
+                id="terminal-tech-architect"
+                data-port="7684"
+                src="/terminal/7684/"
+                aria-labelledby="tab-tech-architect"
+                title="Tech Architect 터미널"></iframe>
+        <iframe class="terminal-iframe hidden"
+                role="tabpanel"
+                id="terminal-planner"
+                data-port="7685"
+                src="/terminal/7685/"
+                aria-labelledby="tab-planner"
+                title="Planner 터미널"></iframe>
+        <iframe class="terminal-iframe hidden"
+                role="tabpanel"
+                id="terminal-test-designer"
+                data-port="7686"
+                src="/terminal/7686/"
+                aria-labelledby="tab-test-designer"
+                title="Test Designer 터미널"></iframe>
+        <iframe class="terminal-iframe hidden"
+                role="tabpanel"
+                id="terminal-developer"
+                data-port="7687"
+                src="/terminal/7687/"
+                aria-labelledby="tab-developer"
+                title="Developer 터미널"></iframe>
+        <iframe class="terminal-iframe hidden"
+                role="tabpanel"
+                id="terminal-reviewer"
+                data-port="7688"
+                src="/terminal/7688/"
+                aria-labelledby="tab-reviewer"
+                title="Reviewer 터미널"></iframe>
+        <iframe class="terminal-iframe hidden"
+                role="tabpanel"
+                id="terminal-documenter"
+                data-port="7689"
+                src="/terminal/7689/"
+                aria-labelledby="tab-documenter"
+                title="Documenter 터미널"></iframe>
+    </main>
+
+    <!-- Help Modal -->
+    <div class="modal-backdrop" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="help-modal-title">도움말 및 단축키</h2>
+                <button class="modal-close" id="help-modal-close" aria-label="닫기">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul class="shortcut-list">
+                    <li class="shortcut-item">
+                        <span class="shortcut-description">특정 탭으로 이동</span>
+                        <span class="shortcut-keys">
+                            <span class="key">Ctrl</span>
+                            <span class="key">1-9</span>
+                        </span>
+                    </li>
+                    <li class="shortcut-item">
+                        <span class="shortcut-description">다음 탭으로 이동</span>
+                        <span class="shortcut-keys">
+                            <span class="key">Ctrl</span>
+                            <span class="key">Tab</span>
+                        </span>
+                    </li>
+                    <li class="shortcut-item">
+                        <span class="shortcut-description">이전 탭으로 이동</span>
+                        <span class="shortcut-keys">
+                            <span class="key">Ctrl</span>
+                            <span class="key">Shift</span>
+                            <span class="key">Tab</span>
+                        </span>
+                    </li>
+                    <li class="shortcut-item">
+                        <span class="shortcut-description">도움말 열기/닫기</span>
+                        <span class="shortcut-keys">
+                            <span class="key">?</span>
+                        </span>
+                    </li>
+                    <li class="shortcut-item">
+                        <span class="shortcut-description">모달 닫기</span>
+                        <span class="shortcut-keys">
+                            <span class="key">Esc</span>
+                        </span>
+                    </li>
+                    <li class="shortcut-item">
+                        <span class="shortcut-description">뷰 모드 전환</span>
+                        <span class="shortcut-keys">
+                            <span class="key">V</span>
+                        </span>
+                    </li>
+                    <li class="shortcut-item">
+                        <span class="shortcut-description">Status Cover 토글</span>
+                        <span class="shortcut-keys">
+                            <span class="key">C</span>
+                        </span>
+                    </li>
+                </ul>
+
+                <div class="agent-info-section">
+                    <h3 class="agent-info-title">에이전트 목록</h3>
+                    <div class="agent-list">
+                        <div class="agent-item"><span>ORC - 전체 조율</span></div>
+                        <div class="agent-item"><span>REQ - 요구사항</span></div>
+                        <div class="agent-item"><span>UX - 설계</span></div>
+                        <div class="agent-item"><span>TECH - 기술</span></div>
+                        <div class="agent-item"><span>PLAN - 계획</span></div>
+                        <div class="agent-item"><span>TEST - 테스트</span></div>
+                        <div class="agent-item"><span>DEV - 개발</span></div>
+                        <div class="agent-item"><span>REV - 리뷰</span></div>
+                        <div class="agent-item"><span>DOC - 문서</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agent Context Menu -->
+    <div class="context-menu" id="agent-context-menu" role="menu" aria-label="에이전트 메뉴">
+        <button class="context-menu-item" id="context-menu-toggle" role="menuitem">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span id="context-menu-toggle-text">종료</span>
+        </button>
+        <button class="context-menu-item" id="context-menu-info" role="menuitem">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>정보</span>
+        </button>
+    </div>
+
+    <!-- Agent Info Modal -->
+    <div class="modal-backdrop" id="agent-info-modal" role="dialog" aria-modal="true" aria-labelledby="agent-info-modal-title">
+        <div class="modal agent-info-modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="agent-info-modal-title">에이전트 정보</h2>
+                <button class="modal-close" id="agent-info-modal-close" aria-label="닫기">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="agent-role-summary" id="agent-role-summary"></p>
+                <div class="agent-claude-md">
+                    <h3>CLAUDE.md</h3>
+                    <pre id="agent-claude-md-content"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shutdown Modal -->
+    <div class="modal-backdrop" id="shutdown-modal" role="dialog" aria-modal="true" aria-labelledby="shutdown-modal-title">
+        <div class="modal shutdown-modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="shutdown-modal-title">시스템 종료</h2>
+                <button class="modal-close" id="shutdown-modal-close" aria-label="닫기">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="shutdown-description">종료 옵션을 선택하세요.</p>
+                <div class="shutdown-options">
+                    <button class="shutdown-option-btn prep-shutdown" id="prep-shutdown-btn">
+                        <div class="shutdown-option-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+                            </svg>
+                        </div>
+                        <div class="shutdown-option-text">
+                            <span class="shutdown-option-title">준비 단계 에이전트 종료</span>
+                            <span class="shutdown-option-desc">REQ, UX, TECH, PLAN, TEST 종료</span>
+                        </div>
+                    </button>
+                    <button class="shutdown-option-btn full-shutdown" id="full-shutdown-btn">
+                        <div class="shutdown-option-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                                <line x1="12" y1="2" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <div class="shutdown-option-text">
+                            <span class="shutdown-option-title">전체 시스템 종료</span>
+                            <span class="shutdown-option-desc">모든 에이전트 및 대시보드 종료</span>
+                        </div>
+                    </button>
+                    <button class="shutdown-option-btn restart-all" id="restart-all-btn">
+                        <div class="shutdown-option-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 4v6h-6"></path>
+                                <path d="M1 20v-6h6"></path>
+                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                            </svg>
+                        </div>
+                        <div class="shutdown-option-text">
+                            <span class="shutdown-option-title">전체 에이전트 재시작</span>
+                            <span class="shutdown-option-desc">모든 에이전트를 종료 후 재실행</span>
+                        </div>
+                    </button>
+                    <button class="shutdown-option-btn cancel-shutdown" id="cancel-shutdown-btn">
+                        <div class="shutdown-option-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </div>
+                        <div class="shutdown-option-text">
+                            <span class="shutdown-option-title">취소</span>
+                            <span class="shutdown-option-desc">종료하지 않고 돌아가기</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aria Live Region for Status Updates -->
+    <div aria-live="polite" aria-atomic="true" id="status-announcer" class="sr-only"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

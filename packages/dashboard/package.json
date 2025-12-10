@@ -1,0 +1,16 @@
+{
+  "name": "multi-agent-dashboard",
+  "version": "1.0.0",
+  "description": "Multi-Agent Terminal Dashboard with same-origin proxy",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "http-proxy": "^1.18.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
