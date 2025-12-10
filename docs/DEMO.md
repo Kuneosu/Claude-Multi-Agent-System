@@ -430,7 +430,7 @@ bash scripts/restart-agent.sh [agent-name]
 - 중간 복잡도: ~$3-$10
 - 복잡한 프로젝트: ~$10-$50
 
-(Claude API 요금 기준, 2024년)
+(Claude API 요금 기준, 2025년)
 ```
 
 ## 다음 단계

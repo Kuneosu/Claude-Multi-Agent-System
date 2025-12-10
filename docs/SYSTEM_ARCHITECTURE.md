@@ -1,7 +1,7 @@
 # Multi-Agent Development System - 시스템 아키텍처 문서
 
 > 본 문서는 현재 구현된 시스템을 면밀히 분석하여 작성되었습니다.
-> 작성일: 2024-11-27
+> 작성일: 2025-12-10
 
 ## 목차
 
@@ -133,7 +133,7 @@ tmux send-keys -t orchestrator:0 C-m
 status:need_user_input
 artifact:/workspace/artifacts/requirements-draft.md
 question_count:7
-timestamp:2024-11-27T15:30:00+09:00
+timestamp:2025-12-10T15:30:00+09:00
 ```
 
 **필드 설명:**
@@ -1137,13 +1137,13 @@ multi-agent-system/
     │   └── user_answers.txt
     │
     ├── output/                     # 최종 결과물 (프로젝트별 폴더)
-    │   ├── 20241127_153000_todo-app/
+    │   ├── 20251210_153000_todo-app/
     │   │   ├── package.json
     │   │   ├── src/
     │   │   ├── public/
     │   │   ├── tests/
     │   │   └── README.md
-    │   ├── 20241127_160000_dice-game/
+    │   ├── 20251210_160000_dice-game/
     │   └── ...
     │
     ├── tests/                      # 임시 테스트 파일

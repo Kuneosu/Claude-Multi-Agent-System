@@ -10,6 +10,11 @@
 .DS_Store
 Thumbs.db
 
+# Environment files
+.env
+.env.*
+*.local
+
 # Editor files
 *.tmp
 *.swp

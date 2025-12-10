@@ -25,7 +25,10 @@ orchestrator (중앙 제어)
 git clone <repository-url>
 cd MAS
 
-# 첫 실행 시 자동으로 설치 진행
+# 의존성 확인 및 초기 설정
+./setup.sh
+
+# 실행
 ./run.sh
 ```
 
@@ -76,6 +79,7 @@ cd MAS
 ```
 MAS/
 ├── README.md                # 이 파일
+├── setup.sh                 # 의존성 확인 및 초기 설정
 ├── run.sh                   # 통합 실행 스크립트 (메뉴 기반)
 ├── config.sh                # 시스템 설정 (에이전트 모델, 포트 등)
 ├── package.json             # 모노레포 설정
@@ -183,6 +187,23 @@ Ctrl+b, d
 - [시스템 아키텍처](docs/SYSTEM_ARCHITECTURE.md)
 - [토큰 최적화](docs/TOKEN_OPTIMIZATION.md)
 
+## 보안 고려사항
+
+### Auto 모드 경고
+
+`Auto` 모드는 Claude CLI의 `--dangerously-skip-permissions` 플래그를 사용합니다. 이 모드에서는:
+
+- 에이전트가 **파일 생성/수정/삭제**를 사용자 확인 없이 수행합니다
+- **시스템 명령어**를 자동으로 실행할 수 있습니다
+- **신뢰할 수 있는 환경**에서만 사용하세요
+
+일반 모드(1, 3번 메뉴)에서는 모든 작업에 사용자 승인이 필요합니다.
+
+### 네트워크 접근
+
+- 웹 대시보드는 **localhost만** 바인딩됩니다
+- 외부 네트워크 노출이 필요한 경우 별도의 인증을 구성하세요
+
 ## 라이선스
 
-MIT License
+MIT License - [LICENSE](LICENSE) 파일 참조
