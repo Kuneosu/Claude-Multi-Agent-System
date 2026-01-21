@@ -352,7 +352,7 @@ cat workspace/logs/last_completed_phase.txt
 
 ## 향후 개선 방향
 
-1. 웹 대시보드 추가
+1. ~~웹 대시보드 추가~~ ✅ (packages/dashboard에 구현됨)
 2. 멀티 프로젝트 지원
 3. 에이전트 간 직접 통신
 4. 학습 기능 (과거 프로젝트 참고)

@@ -56,10 +56,7 @@ workspace/input/*
 # Task files
 workspace/tasks/**/*.json
 
-# Output files (completed projects)
-workspace/output/*
-
-# Project files (temporary workspace)
+# Project files (completed projects)
 workspace/project/*
 
 # Review files
@@ -85,7 +82,6 @@ packages/dashboard/node_modules/
 !workspace/status/.gitkeep
 !workspace/artifacts/.gitkeep
 !workspace/input/.gitkeep
-!workspace/output/.gitkeep
 !workspace/project/.gitkeep
 !workspace/state/.gitkeep
 !workspace/reviews/.gitkeep

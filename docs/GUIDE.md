@@ -1,34 +1,30 @@
-# Multi-Agent Development System - 최종 사용 가이드
+# Multi-Agent Development System - 사용 가이드
 
-## 📦 제공된 파일
-
-[View complete system](computer:///mnt/user-data/outputs/multi-agent-system-complete.tar.gz)
-
-압축 해제 후 디렉토리 구조:
+## 📦 프로젝트 구조
 
 ```
-multi-agent-system/
+MAS/
 ├── README.md              # 프로젝트 개요
-├── QUICKSTART.md          # 빠른 시작 가이드
-├── ARCHITECTURE.md        # 시스템 아키텍처 상세
-├── DEMO.md               # 데모 및 테스트 가이드
-├── run.sh                # 메인 실행 스크립트 ⭐
-└── scripts/
-    ├── setup-workspace.sh    # 워크스페이스 초기화
-    ├── setup-agents.sh       # 에이전트 설정 (CLAUDE.md 생성)
-    ├── cleanup-sessions.sh   # 세션 정리
-    ├── start-sessions.sh     # 모든 세션 시작
-    └── stop-all.sh          # 전체 종료
+├── run.sh                 # 메인 실행 스크립트 ⭐
+├── setup.sh               # 의존성 확인 및 초기 설정
+├── config.sh              # 시스템 설정
+├── docs/                  # 문서
+│   ├── QUICKSTART.md      # 빠른 시작 가이드
+│   ├── GUIDE.md           # 이 파일
+│   ├── ARCHITECTURE.md    # 시스템 아키텍처 상세
+│   └── DEMO.md            # 데모 및 테스트 가이드
+├── scripts/               # 내부 스크립트
+├── packages/dashboard/    # 웹 대시보드
+└── workspace/             # 런타임 작업 공간
 ```
 
 ## 🚀 빠른 시작 (3단계)
 
-### 1단계: 압축 해제 및 이동
+### 1단계: 초기 설정
 
 ```bash
-tar -xzf multi-agent-system-complete.tar.gz
-cd multi-agent-system
-chmod +x run.sh scripts/*.sh
+cd MAS
+./setup.sh
 ```
 
 ### 2단계: 시스템 실행
@@ -37,7 +33,7 @@ chmod +x run.sh scripts/*.sh
 ./run.sh
 ```
 
-5초 후 자동으로 orchestrator 세션에 접속됩니다.
+메뉴에서 실행 모드를 선택합니다.
 
 ### 3단계: 프로젝트 요청
 
@@ -110,7 +106,7 @@ cat workspace/status/*.status
 
 ```
 workspace/
-├── output/          # 최종 결과물 📦
+├── project/         # 최종 결과물 📦
 ├── src/            # 소스 코드 💻
 ├── tests/          # 테스트 파일 🧪
 ├── docs/           # 문서 📚
@@ -222,35 +218,28 @@ Agent → Orchestrator
 ### 세션이 시작 안 됨
 
 ```bash
-bash scripts/stop-all.sh
+./scripts/stop-all.sh
 ./run.sh
 ```
 
 ### 특정 에이전트 멈춤
 
 ```bash
-# 상태 확인
+# 세션 모니터에서 해당 에이전트 번호 입력하여 확인
+# 또는 상태 확인
 cat workspace/status/[agent].status
 
 # 해당 세션 접속
 tmux attach-session -t [agent]
-
-# 재시작
-tmux kill-session -t [agent]
-# orchestrator가 자동 재할당
 ```
 
 ### 작업 진행 안 됨
 
 ```bash
-# 로그 확인
-cat workspace/logs/orchestrator.log
-
 # 시그널 확인
 ls workspace/signals/
 
-# 상태 초기화
-echo "idle" > workspace/status/[agent].status
+# 세션 모니터에서 s 키로 상태 새로고침
 ```
 
 ## 📊 예상 소요 시간 & 비용

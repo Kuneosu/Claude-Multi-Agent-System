@@ -3,29 +3,29 @@
 ## 1단계: 시스템 시작
 
 ```bash
-cd /home/claude/multi-agent-system
+cd MAS  # 프로젝트 디렉토리로 이동
 ./run.sh
 ```
 
-실행되면 다음과 같은 과정이 자동으로 진행됩니다:
+메뉴가 표시되면 `1) 터미널 실행` 또는 `3) 웹 대시보드`를 선택합니다.
+
+실행 시 다음 과정이 자동으로 진행됩니다:
 
 1. ✅ 워크스페이스 초기화
-2. ✅ 9개 에이전트 환경 설정 (각 CLAUDE.md 생성)
-3. ✅ 기존 세션 정리
-4. ✅ 9개 tmux 세션 시작 (각 세션마다 Claude 실행)
-5. ✅ 상태 확인
+2. ✅ 이전 작업 정리
+3. ✅ 9개 에이전트 환경 설정 (각 CLAUDE.md 생성)
+4. ✅ 기존 세션 정리
+5. ✅ 9개 tmux 세션 시작 (각 세션마다 Claude 실행)
 
-5초 후 자동으로 **orchestrator 세션**에 접속됩니다.
+세션이 시작되면 **세션 모니터 화면**이 표시됩니다.
 
 ## 2단계: 오케스트레이터와 대화
 
-오케스트레이터가 다음과 같이 물어봅니다:
+세션 모니터에서 `1`을 눌러 Orchestrator 세션에 접속합니다.
+
+오케스트레이터가 프로젝트 요청을 기다리고 있습니다:
 
 ```
-🤖 Multi-Agent Development System에 오신 것을 환영합니다!
-
-저는 오케스트레이터입니다. 개발 프로세스 전체를 관리합니다.
-
 어떤 프로젝트를 시작하시겠습니까?
 예시:
 - "3D 주사위 굴리기 웹 앱"
@@ -79,7 +79,7 @@ cd /home/claude/multi-agent-system
 
 ```
 workspace/
-├── output/          # 최종 결과물
+├── project/         # 최종 결과물
 ├── src/            # 소스 코드
 ├── tests/          # 테스트 파일
 ├── docs/           # 문서
@@ -104,8 +104,9 @@ tmux attach-session -t orchestrator
 
 ### 모든 세션 종료
 ```bash
-# orchestrator 세션에서 나온 후
-bash scripts/stop-all.sh
+# 세션 모니터에서 q 키를 누르면 모든 세션이 종료됩니다
+# 또는 직접 실행:
+./scripts/stop-all.sh
 ```
 
 ## 디버깅
@@ -123,9 +124,6 @@ cat workspace/status/developer.status
 ```bash
 # 오케스트레이터 로그
 cat workspace/logs/orchestrator.log
-
-# 구현 로그
-cat workspace/logs/iteration-1.log
 ```
 
 ### 시그널 확인
@@ -141,34 +139,29 @@ cat workspace/signals/req-analysis-done
 
 ### Q: 세션이 시작되지 않아요
 ```bash
-bash scripts/stop-all.sh
+./scripts/stop-all.sh
 ./run.sh
 ```
 
 ### Q: 특정 에이전트가 응답하지 않아요
 ```bash
-# 해당 세션 접속
+# 세션 모니터에서 해당 에이전트 번호 입력
+# 또는 직접 접속
 tmux attach-session -t [agent-name]
 
 # 상태 확인
 cat workspace/status/[agent-name].status
-
-# 필요시 재시작
-tmux kill-session -t [agent-name]
-tmux new-session -d -s [agent-name] -c workspace/agents/[agent-name]
-tmux send-keys -t [agent-name]:0 "claude -p CLAUDE.md" Enter
 ```
 
 ### Q: 작업이 멈춘 것 같아요
 ```bash
-# 1. orchestrator 로그 확인
-cat workspace/logs/orchestrator.log
-
-# 2. 대기 중인 작업 확인
+# 1. 대기 중인 작업 확인
 ls workspace/tasks/*/
 
-# 3. 시그널 파일 확인
+# 2. 시그널 파일 확인
 ls workspace/signals/
+
+# 3. 세션 모니터에서 s 키로 상태 새로고침
 ```
 
 ## 고급 사용법

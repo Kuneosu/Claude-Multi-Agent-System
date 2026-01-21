@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # workspace 내 작업 결과물 초기화
-# agents/, output/ 폴더는 유지하고 그 외 작업 결과물만 삭제
+# agents/, project/ 폴더는 유지하고 그 외 작업 결과물만 삭제
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
@@ -9,7 +9,7 @@ WORKSPACE="$ROOT_DIR/workspace"
 
 echo "🧹 Workspace 초기화 중..."
 
-# 초기화할 디렉토리 목록 (output, project는 제외 - 결과물 보존)
+# 초기화할 디렉토리 목록 (project는 제외 - 결과물 보존)
 DIRS_TO_CLEAN=(
     "artifacts"
     "input"
@@ -19,6 +19,7 @@ DIRS_TO_CLEAN=(
     "tests"
     "docs"
     "state"
+    "callbacks"
 )
 
 # 각 디렉토리 내용 삭제 (디렉토리 자체는 유지)
@@ -56,5 +57,5 @@ fi
 
 echo ""
 echo "✅ Workspace 초기화 완료"
-echo "   유지됨: agents/, output/, project/ (프로젝트 결과물 보관)"
-echo "   초기화됨: artifacts/, input/, signals/, logs/, src/, tests/, docs/, state/, tasks/, status/"
+echo "   유지됨: agents/, project/ (프로젝트 결과물 보관)"
+echo "   초기화됨: artifacts/, input/, signals/, logs/, src/, tests/, docs/, state/, callbacks/, tasks/, status/"

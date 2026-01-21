@@ -44,18 +44,21 @@ cd MAS
 메뉴가 표시됩니다:
 
 ```
-╔════════════════════════════════════════════════════════════════════════╗
-║                    Multi-Agent System                                  ║
-╠════════════════════════════════════════════════════════════════════════╣
-║  1) 터미널 실행          - tmux 기반 에이전트 실행                     ║
-║  2) 터미널 실행 (Auto)   - 사용자 확인 없이 자동 실행                  ║
-║  3) 대시보드 실행        - 웹 기반 에이전트 모니터링                   ║
-║  4) 대시보드 실행 (Auto) - 웹 + 자동 실행 모드                         ║
-║  5) 설정                 - 에이전트 모델/포트 설정                     ║
-║  6) 전체 종료            - 모든 세션 및 프로세스 종료                  ║
-║  7) 세션 상태            - 현재 실행 중인 세션 확인                    ║
-║  0) 종료                                                               ║
-╚════════════════════════════════════════════════════════════════════════╝
+  ╔════════════════════════════════════════╗
+  ║       Multi-Agent System               ║
+  ╚════════════════════════════════════════╝
+
+  메인 메뉴
+
+  1) 터미널 실행
+  2) 터미널 실행 (Auto)    완전 자동화, 최고 권한 부여
+  3) 웹 대시보드
+  4) 웹 대시보드 (Auto)    완전 자동화, 최고 권한 부여
+
+  5) 설정                  에이전트별 AI 모델 선택
+  6) 세션 상태             실행 중인 에이전트 확인
+
+  0) 종료
 ```
 
 ### 3. 설정
@@ -70,12 +73,11 @@ cd MAS
 
 ### 4. 대시보드
 
-메뉴에서 `3) 대시보드 실행`을 선택하면 브라우저에서 `http://localhost:8080` 접속 가능
+메뉴에서 `3) 웹 대시보드`를 선택하면 브라우저에서 `http://localhost:8080` 접속 가능
 
 - 9개 에이전트를 한 화면에서 모니터링
-- 에이전트 시작/중지/재시작
-- 전반기 에이전트 종료 (구현 단계 진입 시)
-- 실시간 상태 확인
+- 탭 기반 UI로 에이전트 간 전환
+- 실시간 상태 확인 (idle/working/error)
 
 ## 디렉토리 구조
 
@@ -102,6 +104,7 @@ MAS/
 │   ├── start-sessions-auto.sh # 세션 시작 (자동)
 │   ├── cleanup-sessions.sh  # 세션 정리
 │   ├── cleanup-phase.sh     # 단계별 에이전트 종료
+│   ├── clean-workspace.sh   # 워크스페이스 정리
 │   ├── stop-all.sh          # 전체 종료
 │   └── view-all-agents.sh   # 멀티뷰 모니터링
 │
@@ -109,16 +112,25 @@ MAS/
 │   └── dashboard/           # 웹 대시보드
 │       ├── server.js        # 프록시 서버
 │       ├── index.html       # 대시보드 UI
-│       ├── js/app.js        # 프론트엔드 로직
-│       └── css/style.css    # 스타일
+│       ├── js/              # 프론트엔드 로직
+│       ├── css/             # 스타일
+│       ├── assets/          # 정적 리소스
+│       ├── start-dashboard.sh     # 대시보드 시작
+│       ├── start-dashboard-auto.sh # 대시보드 시작 (자동)
+│       └── stop-dashboard.sh      # 대시보드 종료
 │
 └── workspace/               # 런타임 작업 공간
     ├── agents/              # 에이전트별 CLAUDE.md
-    ├── status/              # 에이전트 상태
+    ├── artifacts/           # 중간 산출물 (requirements.md 등)
+    ├── callbacks/           # 콜백 파일
+    ├── input/               # 사용자 입력
+    ├── logs/                # 실행 로그
+    ├── project/             # 프로젝트 작업 공간 (최종 결과물)
+    ├── reviews/             # 코드 리뷰 결과
     ├── signals/             # IPC 시그널
-    ├── tasks/               # 작업 큐
-    ├── output/              # 완성된 프로젝트
-    └── ...
+    ├── state/               # 상태 저장
+    ├── status/              # 에이전트 상태
+    └── tasks/               # 작업 큐
 ```
 
 ## 실행 모드
@@ -127,26 +139,28 @@ MAS/
 |------|------|---------|------|
 | 터미널 | 1) 터미널 실행 | 9개 전체 | 새 프로젝트 (수동 승인) |
 | 터미널 자동화 | 2) 터미널 실행 (Auto) | 9개 전체 | 새 프로젝트 (완전 자동) |
-| 대시보드 | 3) 대시보드 실행 | 9개 전체 | 웹 기반 모니터링 |
-| 대시보드 자동화 | 4) 대시보드 실행 (Auto) | 9개 전체 | 웹 + 완전 자동 |
+| 대시보드 | 3) 웹 대시보드 | 9개 전체 | 웹 기반 모니터링 |
+| 대시보드 자동화 | 4) 웹 대시보드 (Auto) | 9개 전체 | 웹 + 완전 자동 |
 
 ## 기본 모델 설정
 
 `config.sh`에서 에이전트별 Claude 모델을 설정합니다:
 
 ```bash
-AGENT_MODELS=(
-    ["orchestrator"]="opus"      # 중앙 제어 (고성능)
-    ["requirement-analyst"]="sonnet"
-    ["ux-designer"]="sonnet"
-    ["tech-architect"]="sonnet"
-    ["planner"]="sonnet"
-    ["test-designer"]="sonnet"
-    ["developer"]="opus"         # 코드 구현 (고성능)
-    ["reviewer"]="sonnet"
-    ["documenter"]="sonnet"
-)
+# 에이전트별 Claude 모델 설정
+# 사용 가능한 모델: opus, sonnet, haiku
+MODEL_orchestrator="opus"
+MODEL_requirement_analyst="opus"
+MODEL_ux_designer="opus"
+MODEL_tech_architect="opus"
+MODEL_planner="opus"
+MODEL_test_designer="opus"
+MODEL_developer="opus"
+MODEL_reviewer="opus"
+MODEL_documenter="opus"
 ```
+
+메뉴의 `5) 설정`에서 모델을 변경할 수 있습니다.
 
 ## 개발 워크플로우
 

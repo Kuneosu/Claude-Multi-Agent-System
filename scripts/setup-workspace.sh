@@ -7,7 +7,7 @@ ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 WORKSPACE="$ROOT_DIR/workspace"
 
 # 워크스페이스 디렉토리 구조
-mkdir -p "$WORKSPACE"/{agents,artifacts,tasks,signals,status,logs,input,output,tests,docs,src}
+mkdir -p "$WORKSPACE"/{agents,artifacts,tasks,signals,status,logs,input,project,tests,docs,src,state,callbacks,reviews}
 
 # 각 에이전트별 작업 큐 디렉토리
 mkdir -p "$WORKSPACE/tasks"/{orchestrator,requirement-analyst,ux-designer,tech-architect,planner,test-designer,developer,reviewer,documenter}
@@ -26,14 +26,17 @@ cat > "$WORKSPACE/README.md" << 'EOF'
 
 ```
 workspace/
-├── agents/           # 각 에이전트의 작업 디렉토리
-├── artifacts/        # 생성된 산출물 (requirements.md, design.md 등)
-├── tasks/           # 에이전트별 작업 큐
-├── signals/         # 에이전트 간 통신용 시그널 파일
-├── status/          # 각 에이전트의 상태 파일
+├── agents/           # 각 에이전트의 작업 디렉토리 (CLAUDE.md 포함)
+├── artifacts/        # 생성된 산출물 (requirements.md, ux-design.md 등)
+├── callbacks/        # 콜백 파일
+├── input/           # 사용자 입력 (user_request.txt 등)
 ├── logs/            # 실행 로그
-├── input/           # 사용자 입력
-├── output/          # 최종 결과물
+├── project/         # 프로젝트 작업 공간 (최종 결과물)
+├── reviews/         # 코드 리뷰 결과
+├── signals/         # 에이전트 간 통신용 시그널 파일
+├── state/           # 상태 저장
+├── status/          # 각 에이전트의 상태 파일
+├── tasks/           # 에이전트별 작업 큐
 ├── tests/           # 테스트 파일
 ├── docs/            # 문서
 └── src/             # 소스 코드
@@ -41,7 +44,7 @@ workspace/
 
 ## 상태 파일 형식
 
-각 에이전트의 상태:
+각 에이전트의 상태 (`status/[agent].status`):
 - `idle`: 대기 중
 - `working`: 작업 중
 - `waiting_approval`: 사용자 승인 대기
@@ -53,7 +56,7 @@ workspace/
 ```
 status:completed
 artifact:/workspace/artifacts/requirements.md
-timestamp:2024-01-15T10:00:00Z
+timestamp:2025-12-12T10:00:00Z
 ```
 EOF
 

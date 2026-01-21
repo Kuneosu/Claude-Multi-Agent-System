@@ -11,8 +11,7 @@
     "start": "./run.sh",
     "start:auto": "./run-auto.sh",
     "dashboard": "./dashboard.sh",
-    "stop": "./stop.sh",
-    "postinstall": "cd packages/dashboard && npm install"
+    "stop": "./stop.sh"
   },
   "keywords": [
     "multi-agent",
